@@ -16,11 +16,11 @@ jobs:
         username: ubuntu
         key: ${{ secrets.EC2_KEY }}
         script: |
-            cd ~/my-node-app
-            git pull origin main
+           cd ~/my-node-app
+           git pull origin main
 
-            docker ps -q --filter "publish=3000" | xargs -r docker stop
-            docker ps -aq --filter "publish=3000" | xargs -r docker rm
+           docker stop my-app || true
+           docker rm my-app || true
 
-            docker build -t my-node-app .
-            docker run -d -p 3000:3000 --name my-app my-node-app
+           docker build -t my-node-app .
+           docker run -d -p 3000:3000 --name my-app my-node-app
